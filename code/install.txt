@@ -1,0 +1,18 @@
+pip install timm
+pip install ninja
+pip install tensorboard
+
+# Install NVIDIA apex
+git clone https://github.com/NVIDIA/apex
+cd apex
+pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+cd ../
+rm -rf apex/
+
+# Build Deformable Convolution
+cd mm_modules/DCN
+python setup.py build install
+
+pip install opencv-python termcolor yacs
+
+python -m torch.distributed.launch --nproc_per_node=2 main.py
